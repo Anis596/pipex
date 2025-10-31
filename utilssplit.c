@@ -6,7 +6,7 @@
 /*   By: abensaid <abensaid@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 10:51:43 by abensaid          #+#    #+#             */
-/*   Updated: 2025/10/31 07:29:13 by abensaid         ###   ########.fr       */
+/*   Updated: 2025/10/31 08:28:21 by abensaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,25 @@ static char	*start_end(const char *s, int pos, char c)
 	return (word);
 }
 
-void	free_tab(char **tab, int i)
+static void	free_tab(char **tab, int i)
 {
 	while (i >= 0)
 	{
 		free(tab[i]);
 		i--;
+	}
+	free(tab);
+}
+
+void	free_tab1(char **tab)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i])
+	{
+		free(tab[i]);
+		i++;
 	}
 	free(tab);
 }

@@ -6,7 +6,7 @@
 /*   By: abensaid <abensaid@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 09:18:44 by abensaid          #+#    #+#             */
-/*   Updated: 2025/10/31 08:11:23 by abensaid         ###   ########.fr       */
+/*   Updated: 2025/10/31 09:52:24 by abensaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,13 @@ char	*get_cmd_path(char *cmd, char **envp)
 		tmp = ft_strjoin(tmp, cmd);
 		if (access(tmp, X_OK) == 0)
 		{
-			free_tab(path);
+			free_tab1(path);
 			return (tmp);
 		}
 		free(tmp);
 		j++;
 	}
-	free_tab(path);
+	free_tab1(path);
 	return (NULL);
 }
 
@@ -67,10 +67,23 @@ void	execute(char *cmd, char **envp)
 		argv_cmd = ft_split(cmd, ' ');
 		if (execve(cmd_path, argv_cmd, envp) == -1)
 		{
-			free_tab (argv_cmd);
+			free_tab1 (argv_cmd);
 			error_exit("execve failed");
 		}
 	}
+}
+
+void	child_process_1(int pipe_fd[2], char *file1, char *cmd, char **envp)
+{
+	int		fd_in;
+
+	fd_in = open(file1, O_RDONLY);
+	if (fd_in == -1)
+		error_exit("file error");
+	dup2(fd_in, STDIN_FILENO);
+	close(fd_in);
+	dup2(pipe_fd[1], STDOUT_FILENO);
+	execute(cmd, envp);
 }
 
 // int	main(int ac, char **av, char **envp)

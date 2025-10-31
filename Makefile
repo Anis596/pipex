@@ -3,7 +3,7 @@ NAME = pipex
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
-SRC = pipex.c utils.c path_utils.c utilssplit.c
+SRC = pipex.c utils.c utilssplit.c
 OBJ = $(SRC:.c=.o)
 
 all: $(NAME)
