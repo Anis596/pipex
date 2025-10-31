@@ -6,44 +6,32 @@
 /*   By: abensaid <abensaid@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 09:18:46 by abensaid          #+#    #+#             */
-/*   Updated: 2025/10/29 19:56:24 by abensaid         ###   ########.fr       */
+/*   Updated: 2025/10/31 07:57:08 by abensaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H
 
-# include <errno.h>    // errno
-# include <fcntl.h>    // open
-# include <stdio.h>    // perror
-# include <stdlib.h>   // malloc, free, exit
-# include <string.h>   // strerror
-# include <sys/wait.h> // wait, waitpid
-# include <unistd.h>   // fork, execve, pipe, dup, dup2, access, close
+# include <errno.h>
+# include <fcntl.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
+# include <sys/wait.h>
+# include <unistd.h>
 
-typedef struct s_pipex
-{
-	int		pipe_fd[2];
-	int		file1;
-	int		file2;
-	pid_t	pid1;
-	pid_t	pid2;
-	char	**paths;
-	char	**cmd_args;
-	char	*cmd_path;
-}			t_pipex;
+void	child_process_1(int pipe_fd[2], char *file1, char *cmd, char **envp);
+void	child_process_2(int pipe_fd[2], char *file2, char *cmd, char **envp);
+void	execute(char *cmd, char **envp);
+char	*find_path(char **envp);
+char	*get_cmd_path(char *cmd, char **envp);
 
-// -------- FONCTIONS PRINCIPALES --------
-void		child_process_1(t_pipex *px, char **argv, char **envp);
-void		child_process_2(t_pipex *px, char **argv, char **envp);
-void		execute(char *cmd, char **envp);
-char		*find_path(char *cmd, char **envp);
-
-// -------- UTILS --------
-char		**ft_split(char const *s, char c);
-char		*ft_strjoin(char const *s1, char const *s2);
-size_t		ft_strlen(const char *s);
-void		free_tab(char **tab);
-void		error_exit(const char *msg);
+char	**ft_split(char const *s, char c);
+char	*ft_strjoin(char *s1, char *s2);
+size_t	ft_strlen(const char *s);
+void	free_tab(char **tab);
+void	error_exit(const char *msg);
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
 
 #endif
