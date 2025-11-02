@@ -6,7 +6,7 @@
 /*   By: abensaid <abensaid@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 09:18:46 by abensaid          #+#    #+#             */
-/*   Updated: 2025/11/02 14:51:47 by abensaid         ###   ########.fr       */
+/*   Updated: 2025/11/02 15:28:11 by abensaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	**ft_split(char const *s, char c);
 char	*ft_strjoin(char *s1, char *s2);
 size_t	ft_strlen(const char *s);
 void	free_tab1(char **tab);
-void	error_exit(char *msg);
+void	error_exit(char *msg, int code);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 char	*join_cmd(char *path, char *cmd);
 

@@ -6,7 +6,7 @@
 /*   By: abensaid <abensaid@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 09:18:44 by abensaid          #+#    #+#             */
-/*   Updated: 2025/11/02 14:45:48 by abensaid         ###   ########.fr       */
+/*   Updated: 2025/11/02 15:48:09 by abensaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,12 @@ void	execute(char *cmd, char **envp)
 	argv_cmd = ft_split(cmd, ' ');
 	cmd_path = get_cmd_path(argv_cmd[0], envp);
 	if (!cmd_path)
-		error_exit("Cmd not found");
+		error_exit("Cmd not found", 127);
 	if (execve(cmd_path, argv_cmd, envp) == -1)
 	{
 		free_tab1(argv_cmd);
 		free(cmd_path);
-		error_exit("execve failed");
+		error_exit("execve failed", 126);
 	}
 }
 
@@ -62,7 +62,11 @@ void	child_process_1(int pipe_fd[2], char *file1, char *cmd, char **envp)
 
 	fd_in = open(file1, O_RDONLY);
 	if (fd_in == -1)
-		error_exit("file error");
+	{
+		close(pipe_fd[0]);
+		close(pipe_fd[1]);
+		error_exit("file error", 1);
+	}
 	dup2(fd_in, STDIN_FILENO);
 	close(fd_in);
 	dup2(pipe_fd[1], STDOUT_FILENO);
@@ -77,7 +81,11 @@ void	child_process_2(int pipe_fd[2], char *file2, char *cmd, char **envp)
 
 	fd_out = open(file2, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd_out == -1)
-		error_exit("file error");
+	{
+		close(pipe_fd[0]);
+		close(pipe_fd[1]);
+		error_exit("file error", 1);
+	}
 	dup2(fd_out, STDOUT_FILENO);
 	close(fd_out);
 	dup2(pipe_fd[0], STDIN_FILENO);
@@ -95,7 +103,7 @@ int	main(int ac, char **av, char **envp)
 	pid1 = 0;
 	pid2 = 0;
 	if (ac != 5)
-		error_exit("Invalid number of arguments");
+		error_exit("Invalid number of arguments", 1);
 	pipe(pipe_fd);
 	pid1 = fork();
 	if (pid1 == 0)

@@ -6,7 +6,7 @@
 /*   By: abensaid <abensaid@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 16:29:30 by abensaid          #+#    #+#             */
-/*   Updated: 2025/11/02 14:52:39 by abensaid         ###   ########.fr       */
+/*   Updated: 2025/11/02 15:09:35 by abensaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,10 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-void	error_exit(char *msg)
+void	error_exit(char *msg, int code)
 {
 	perror(msg);
-	exit(EXIT_FAILURE);
+	exit(code);
 }
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
