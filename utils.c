@@ -6,7 +6,7 @@
 /*   By: abensaid <abensaid@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 16:29:30 by abensaid          #+#    #+#             */
-/*   Updated: 2025/10/31 05:51:12 by abensaid         ###   ########.fr       */
+/*   Updated: 2025/11/02 14:52:39 by abensaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-void	error_exit(const char *msg)
+void	error_exit(char *msg)
 {
 	perror(msg);
 	exit(EXIT_FAILURE);

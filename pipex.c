@@ -6,25 +6,11 @@
 /*   By: abensaid <abensaid@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 09:18:44 by abensaid          #+#    #+#             */
-/*   Updated: 2025/10/31 13:54:36 by abensaid         ###   ########.fr       */
+/*   Updated: 2025/11/02 14:45:48 by abensaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-char	*find_path(char **envp)
-{
-	int	i;
-
-	i = 0;
-	while (envp[i])
-	{
-		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
-			return (envp[i] + 5);
-		i++;
-	}
-	return (NULL);
-}
 
 char	*get_cmd_path(char *cmd, char **envp)
 {
@@ -40,8 +26,7 @@ char	*get_cmd_path(char *cmd, char **envp)
 	j = 0;
 	while (path[j])
 	{
-		tmp = ft_strjoin(path[j], "/");
-		tmp = ft_strjoin(tmp, cmd);
+		tmp = join_cmd(path[j], cmd);
 		if (access(tmp, X_OK) == 0)
 		{
 			free_tab1(path);
@@ -59,17 +44,15 @@ void	execute(char *cmd, char **envp)
 	char	**argv_cmd;
 	char	*cmd_path;
 
-	cmd_path = get_cmd_path(cmd, envp);
+	argv_cmd = ft_split(cmd, ' ');
+	cmd_path = get_cmd_path(argv_cmd[0], envp);
 	if (!cmd_path)
 		error_exit("Cmd not found");
-	else
+	if (execve(cmd_path, argv_cmd, envp) == -1)
 	{
-		argv_cmd = ft_split(cmd, ' ');
-		if (execve(cmd_path, argv_cmd, envp) == -1)
-		{
-			free_tab1(argv_cmd);
-			error_exit("execve failed");
-		}
+		free_tab1(argv_cmd);
+		free(cmd_path);
+		error_exit("execve failed");
 	}
 }
 
@@ -92,7 +75,7 @@ void	child_process_2(int pipe_fd[2], char *file2, char *cmd, char **envp)
 {
 	int	fd_out;
 
-	fd_out = open(file2, O_WRONLY | O_CREAT | O_TRUNC, 0777);
+	fd_out = open(file2, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd_out == -1)
 		error_exit("file error");
 	dup2(fd_out, STDOUT_FILENO);
