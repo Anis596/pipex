@@ -6,7 +6,7 @@
 /*   By: abensaid <abensaid@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 09:18:44 by abensaid          #+#    #+#             */
-/*   Updated: 2025/11/02 15:48:09 by abensaid         ###   ########.fr       */
+/*   Updated: 2025/11/02 21:54:05 by abensaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,10 @@ void	execute(char *cmd, char **envp)
 	argv_cmd = ft_split(cmd, ' ');
 	cmd_path = get_cmd_path(argv_cmd[0], envp);
 	if (!cmd_path)
+	{
+		free_tab1(argv_cmd);
 		error_exit("Cmd not found", 127);
+	}
 	if (execve(cmd_path, argv_cmd, envp) == -1)
 	{
 		free_tab1(argv_cmd);
