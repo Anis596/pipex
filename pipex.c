@@ -6,7 +6,7 @@
 /*   By: abensaid <abensaid@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 09:18:44 by abensaid          #+#    #+#             */
-/*   Updated: 2025/11/02 21:54:05 by abensaid         ###   ########.fr       */
+/*   Updated: 2025/11/03 20:17:35 by abensaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@ char	*get_cmd_path(char *cmd, char **envp)
 	char	*tmp;
 	int		j;
 
+	tmp = get_slash(cmd);
+	if (tmp)
+		return (tmp);
 	path_line = find_path(envp);
 	if (!path_line)
 		return (NULL);
@@ -35,8 +38,7 @@ char	*get_cmd_path(char *cmd, char **envp)
 		free(tmp);
 		j++;
 	}
-	free_tab1(path);
-	return (NULL);
+	return (free_tab1(path), NULL);
 }
 
 void	execute(char *cmd, char **envp)
