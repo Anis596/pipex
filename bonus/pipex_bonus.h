@@ -6,7 +6,7 @@
 /*   By: abensaid <abensaid@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/02 17:40:39 by abensaid          #+#    #+#             */
-/*   Updated: 2025/11/02 17:40:54 by abensaid         ###   ########.fr       */
+/*   Updated: 2025/11/08 06:01:31 by abensaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,9 @@ void	free_tab1(char **tab);
 void	error_exit(char *msg, int code);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 char	*join_cmd(char *path, char *cmd);
+int		**multi_pipe(int nb_cmds);
+void	setup_child(int i, int nb_cmds, int **pipe_nb, char **av, char **envp);
+void	run_multi_cmds(int ac, char **av, char **envp);
+char	*get_slash(char *cmd);
 
 #endif
