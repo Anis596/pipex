@@ -6,7 +6,7 @@
 /*   By: abensaid <abensaid@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/02 17:39:45 by abensaid          #+#    #+#             */
-/*   Updated: 2025/11/08 06:01:24 by abensaid         ###   ########.fr       */
+/*   Updated: 2025/11/28 02:30:32 by abensaid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,11 +126,11 @@ void	child_process_2(int pipe_fd[2], char *file2, char *cmd, char **envp)
 //	waitpid(pid2, NULL, 0);
 //}
 
-int	main(int ac, char **av, char **envp)
-{
-	if (ac > 5)
-	{
-		run_multi_cmds(ac, av, envp);
-	}
-	return (0);
-}
+//int	main(int ac, char **av, char **envp)
+//{
+//	if (ac > 5)
+//	{
+//		run_multi_cmds(ac, av, envp);
+//	}
+//	return (0);
+//}
